@@ -6,6 +6,7 @@ import springframework.springreactivemongo.model.BeerDTO;
 
 @Mapper
 public interface BeerMapper {
+
     BeerDTO beerToBeerDTO(Beer beer);
 
     Beer beerDtoToBeer(BeerDTO beerDTO);

@@ -7,7 +7,7 @@ import springframework.springreactivemongo.model.CustomerDTO;
 @Mapper
 public interface CustomerMapper {
 
-    CustomerDTO CustomerToCustomerDto(Customer customer);
+    CustomerDTO customerToCustomerDto(Customer customer);
 
-    Customer CustomerDtoToCustomer(CustomerDTO customerDTO);
+    Customer customerDtoToCustomer(CustomerDTO customerDTO);
 }
