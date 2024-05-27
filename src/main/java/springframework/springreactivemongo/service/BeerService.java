@@ -20,5 +20,7 @@ public interface BeerService {
 
     Flux<BeerDTO> beerList();
 
+    Mono<BeerDTO> findFirstByBeerName(String beerName);
 
+    Flux<BeerDTO> findByBeerStyle(String beerStyle);
 }
