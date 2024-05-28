@@ -20,4 +20,6 @@ public interface CustomerService {
 
     Flux<CustomerDTO> customerList();
 
+    Mono<CustomerDTO> findFirstByCustomerName(String customerName);
+
 }

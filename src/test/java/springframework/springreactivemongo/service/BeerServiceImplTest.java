@@ -30,12 +30,11 @@ class BeerServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        beerDTO = beerMapper.beerToBeerDTO(helperBeer());
+        beerDTO = beerMapper.beerToBeerDto(helperBeer());
     }
 
     public static Beer helperBeer() {
         return Beer.builder()
-                .id("12345678987654321")
                 .beerName("RandomName")
                 .beerStyle("RandomStyle")
                 .upc("661")
@@ -45,7 +44,7 @@ class BeerServiceImplTest {
     }
 
     public static BeerDTO helperBeerDTO() {
-        return new BeerMapperImpl().beerToBeerDTO(helperBeer());
+        return new BeerMapperImpl().beerToBeerDto(helperBeer());
     }
 
     @Test
@@ -62,7 +61,7 @@ class BeerServiceImplTest {
 
         BeerDTO persistedDTO = atomicDTO.get();
         assertThat(persistedDTO).isNotNull();
-        assertThat(persistedDTO.getId()).isEqualTo(beerDTO.getId());
+        assertThat(persistedDTO.getId()).isNotNull();
     }
 
     @Test
@@ -79,8 +78,7 @@ class BeerServiceImplTest {
         await().untilTrue(atomicBoolean);
 
         BeerDTO persistedDTO = atomicDTO.get();
-        assertThat(persistedDTO).isNotNull();
-        assertThat(persistedDTO.getId()).isEqualTo(beerDTO.getId());
+        assertThat(persistedDTO.getId()).isNotNull();
 
         persistedDTO.setBeerName("JustAnotherName");
         AtomicReference<BeerDTO> updatedAtomicDTO = new AtomicReference<>();
@@ -108,8 +106,7 @@ class BeerServiceImplTest {
         await().untilTrue(atomicBoolean);
 
         BeerDTO persistedDTO = atomicDTO.get();
-        assertThat(persistedDTO).isNotNull();
-        assertThat(persistedDTO.getId()).isEqualTo(beerDTO.getId());
+        assertThat(persistedDTO.getId()).isNotNull();
 
         persistedDTO.setBeerName("JustAnotherRandomNameAfterPatch");
         AtomicReference<BeerDTO> patchedAtomicDTO = new AtomicReference<>();
@@ -119,13 +116,13 @@ class BeerServiceImplTest {
         await().until(() -> patchedAtomicDTO.get() != null);
 
         BeerDTO patchedDTO = patchedAtomicDTO.get();
-        assertThat(patchedDTO).isNotNull();
         assertThat(patchedDTO.getBeerName()).isEqualTo(patchedBeerName);
     }
 
     @Test
     void deleteBeer() {
         BeerDTO beerToDelete = helperBeerDTO();
+        beerToDelete.setId("798798789");
         beerService.deleteBeer(beerToDelete.getId()).subscribe();
         Mono<BeerDTO> expectedEmptyBeerMono = beerService.findBeerById(beerToDelete.getId());
 

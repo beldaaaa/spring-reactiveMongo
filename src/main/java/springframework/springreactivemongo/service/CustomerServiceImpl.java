@@ -68,4 +68,12 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findAll()
                 .map(customerMapper::customerToCustomerDto);
     }
+
+    @Override
+    public Mono<CustomerDTO> findFirstByCustomerName(String customerName) {
+        return customerRepository.findFirstByCustomerName(customerName)
+                .map(customerMapper::customerToCustomerDto);
+    }
+
+
 }

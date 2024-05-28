@@ -33,17 +33,16 @@ class CustomerServiceImplTest {
 
     public static Customer helperCustomer() {
         return Customer.builder()
-                .id("99999999")
                 .customerName("Jolanda")
                 .build();
     }
 
-    public static CustomerDTO CustomerDTO() {
+    public static CustomerDTO helperCustomerDTO() {
         return new CustomerMapperImpl().customerToCustomerDto(helperCustomer());
     }
 
     @Test
-    void saveBeer() {
+    void saveCustomer() {
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<CustomerDTO> atomicDTO = new AtomicReference<>();
         Mono<CustomerDTO> savedMono = customerService.saveCustomer(Mono.just(customerDTO));
@@ -56,15 +55,15 @@ class CustomerServiceImplTest {
 
         CustomerDTO persistedDTO = atomicDTO.get();
         assertThat(persistedDTO).isNotNull();
-        assertThat(persistedDTO.getId()).isEqualTo(customerDTO.getId());
+        assertThat(persistedDTO.getId()).isNotNull();
     }
 
     @Test
-    void updateBeer() {
+    void updateCustomer() {
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<CustomerDTO> atomicDTO = new AtomicReference<>();
         Mono<CustomerDTO> savedMono = customerService.saveCustomer(Mono.just(customerDTO));
-        final String updatedBeerName = "JustAnotherName";
+        final String updatedCustomerName = "JustAnotherName";
 
         savedMono.subscribe(savedDTO -> {
             atomicBoolean.set(true);
@@ -73,8 +72,7 @@ class CustomerServiceImplTest {
         await().untilTrue(atomicBoolean);
 
         CustomerDTO persistedDTO = atomicDTO.get();
-        assertThat(persistedDTO).isNotNull();
-        assertThat(persistedDTO.getId()).isEqualTo(customerDTO.getId());
+        assertThat(persistedDTO.getId()).isNotNull();
 
         persistedDTO.setCustomerName("JustAnotherName");
         AtomicReference<CustomerDTO> updatedAtomicDTO = new AtomicReference<>();
@@ -85,12 +83,12 @@ class CustomerServiceImplTest {
 
         CustomerDTO updatedDTO = updatedAtomicDTO.get();
         assertThat(updatedDTO).isNotNull();
-        assertThat(updatedDTO.getCustomerName()).isEqualTo(updatedBeerName);
+        assertThat(updatedDTO.getCustomerName()).isEqualTo(updatedCustomerName);
     }
 
     @Test
-    void patchBeer() {
-        final String patchedBeerName = "JustAnotherRandomNameAfterPatch";
+    void patchCustomer() {
+        final String patchedCustomerName = "JustAnotherRandomNameAfterPatch";
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<CustomerDTO> atomicDTO = new AtomicReference<>();
         Mono<CustomerDTO> savedMono = customerService.saveCustomer(Mono.just(customerDTO));
@@ -102,8 +100,7 @@ class CustomerServiceImplTest {
         await().untilTrue(atomicBoolean);
 
         CustomerDTO persistedDTO = atomicDTO.get();
-        assertThat(persistedDTO).isNotNull();
-        assertThat(persistedDTO.getId()).isEqualTo(customerDTO.getId());
+        assertThat(persistedDTO.getId()).isNotNull();
 
         persistedDTO.setCustomerName("JustAnotherRandomNameAfterPatch");
         AtomicReference<CustomerDTO> patchedAtomicDTO = new AtomicReference<>();
@@ -113,21 +110,31 @@ class CustomerServiceImplTest {
         await().until(() -> patchedAtomicDTO.get() != null);
 
         CustomerDTO patchedDTO = patchedAtomicDTO.get();
-        assertThat(patchedDTO).isNotNull();
-        assertThat(patchedDTO.getCustomerName()).isEqualTo(patchedBeerName);
+        assertThat(patchedDTO.getCustomerName()).isEqualTo(patchedCustomerName);
     }
 
     @Test
-    void deleteBeer() {
-        CustomerDTO beerToDelete = CustomerDTO();
-        customerService.deleteCustomer(beerToDelete.getId()).subscribe();
+    void deleteCustomer() {
+        CustomerDTO customerToDelete = helperCustomerDTO();
+        customerToDelete.setId("465126865421");
+        customerService.deleteCustomer(customerToDelete.getId()).subscribe();
+        Mono<CustomerDTO> expectedEmptyCustomerMono = customerService.findCustomerById(customerToDelete.getId());
 
-        Mono<CustomerDTO> expectedEmptyBeerMono = customerService.findCustomerById(beerToDelete.getId());
-
-        StepVerifier.create(expectedEmptyBeerMono)
+        StepVerifier.create(expectedEmptyCustomerMono)
                 .expectNextCount(0)
                 .verifyComplete();
     }
 
+    @Test
+    void findFirstByCustomerName() {
+        CustomerDTO customerToFind = helperCustomerDTO();
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+        Mono<CustomerDTO> foundCustomer = customerService.findFirstByCustomerName(customerToFind.getCustomerName());
 
+        foundCustomer.subscribe(dto -> {
+            atomicBoolean.set(true);
+            System.out.println(dto.toString());
+        });
+        await().untilTrue(atomicBoolean);
+    }
 }

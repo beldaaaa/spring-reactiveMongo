@@ -20,13 +20,13 @@ public class BeerServiceImpl implements BeerService {
     public Mono<BeerDTO> saveBeer(Mono<BeerDTO> beerDTO) {
         return beerDTO.map(beerMapper::beerDtoToBeer)
                 .flatMap(beerRepository::save)//repository is going to return a new publisher
-                .map(beerMapper::beerToBeerDTO);
+                .map(beerMapper::beerToBeerDto);
     }
 
     @Override
     public Mono<BeerDTO> saveBeer(BeerDTO beerDTO) {
         return beerRepository.save(beerMapper.beerDtoToBeer(beerDTO))
-                .map(beerMapper::beerToBeerDTO);
+                .map(beerMapper::beerToBeerDto);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class BeerServiceImpl implements BeerService {
                     foundBeer.setQuantityOnHand(beerDTO.getQuantityOnHand());
                     return foundBeer;
                 }).flatMap(beerRepository::save)
-                .map(beerMapper::beerToBeerDTO);
+                .map(beerMapper::beerToBeerDto);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class BeerServiceImpl implements BeerService {
                     }
                     return foundBeer;
                 }).flatMap(beerRepository::save)
-                .map(beerMapper::beerToBeerDTO);
+                .map(beerMapper::beerToBeerDto);
     }
 
     @Override
@@ -75,24 +75,24 @@ public class BeerServiceImpl implements BeerService {
     @Override
     public Mono<BeerDTO> findBeerById(String beerId) {
         return beerRepository.findById(beerId)
-                .map(beerMapper::beerToBeerDTO);
+                .map(beerMapper::beerToBeerDto);
     }
 
     @Override
     public Flux<BeerDTO> beerList() {
         return beerRepository.findAll()
-                .map(beerMapper::beerToBeerDTO);
+                .map(beerMapper::beerToBeerDto);
     }
 
     @Override
     public Mono<BeerDTO> findFirstByBeerName(String beerName) {
         return beerRepository.findFirstByBeerName(beerName)
-                .map(beerMapper::beerToBeerDTO);
+                .map(beerMapper::beerToBeerDto);
     }
 
     @Override
     public Flux<BeerDTO> findByBeerStyle(String beerStyle) {
         return beerRepository.findBeerByBeerStyle(beerStyle)
-                .map(beerMapper::beerToBeerDTO);
+                .map(beerMapper::beerToBeerDto);
     }
 }
