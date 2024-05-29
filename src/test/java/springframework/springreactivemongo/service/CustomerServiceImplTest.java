@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 @SpringBootTest
-class CustomerServiceImplTest {
+public class CustomerServiceImplTest {
     @Autowired
     CustomerService customerService;
     @Autowired

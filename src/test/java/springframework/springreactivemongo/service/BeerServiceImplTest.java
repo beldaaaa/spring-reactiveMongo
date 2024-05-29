@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 @SpringBootTest
-class BeerServiceImplTest {
+public class BeerServiceImplTest {
 
     @Autowired
     BeerService beerService;
@@ -124,7 +124,7 @@ class BeerServiceImplTest {
         BeerDTO beerToDelete = helperBeerDTO();
         beerToDelete.setId("798798789");
         beerService.deleteBeer(beerToDelete.getId()).subscribe();
-        Mono<BeerDTO> expectedEmptyBeerMono = beerService.findBeerById(beerToDelete.getId());
+        Mono<BeerDTO> expectedEmptyBeerMono = beerService.findByBeerId(beerToDelete.getId());
 
         StepVerifier.create(expectedEmptyBeerMono)
                 .expectNextCount(0)

@@ -16,7 +16,7 @@ public interface BeerService {
 
     Mono<Void> deleteBeer(String beerId);
 
-    Mono<BeerDTO> findBeerById(String beerId);
+    Mono<BeerDTO> findByBeerId(String beerId);
 
     Flux<BeerDTO> beerList();
 

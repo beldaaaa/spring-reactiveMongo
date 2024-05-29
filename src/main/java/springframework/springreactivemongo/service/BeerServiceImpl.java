@@ -73,7 +73,7 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public Mono<BeerDTO> findBeerById(String beerId) {
+    public Mono<BeerDTO> findByBeerId(String beerId) {
         return beerRepository.findById(beerId)
                 .map(beerMapper::beerToBeerDto);
     }
