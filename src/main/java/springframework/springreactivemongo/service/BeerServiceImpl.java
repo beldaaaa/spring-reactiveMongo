@@ -17,14 +17,14 @@ public class BeerServiceImpl implements BeerService {
     private final BeerMapper beerMapper;
 
     @Override
-    public Mono<BeerDTO> saveBeer(Mono<BeerDTO> beerDTO) {
+    public Mono<BeerDTO> createBeer(Mono<BeerDTO> beerDTO) {
         return beerDTO.map(beerMapper::beerDtoToBeer)
                 .flatMap(beerRepository::save)//repository is going to return a new publisher
                 .map(beerMapper::beerToBeerDto);
     }
 
     @Override
-    public Mono<BeerDTO> saveBeer(BeerDTO beerDTO) {
+    public Mono<BeerDTO> createBeer(BeerDTO beerDTO) {
         return beerRepository.save(beerMapper.beerDtoToBeer(beerDTO))
                 .map(beerMapper::beerToBeerDto);
     }

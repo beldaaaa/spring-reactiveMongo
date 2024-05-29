@@ -48,10 +48,10 @@ public class BeerServiceImplTest {
     }
 
     @Test
-    void saveBeer() {
+    void createBeer() {
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<BeerDTO> atomicDTO = new AtomicReference<>();
-        Mono<BeerDTO> savedMono = beerService.saveBeer(Mono.just(beerDTO));
+        Mono<BeerDTO> savedMono = beerService.createBeer(Mono.just(beerDTO));
 
         savedMono.subscribe(savedDTO -> {
             atomicBoolean.set(true);
@@ -68,7 +68,7 @@ public class BeerServiceImplTest {
     void updateBeer() {
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<BeerDTO> atomicDTO = new AtomicReference<>();
-        Mono<BeerDTO> savedMono = beerService.saveBeer(Mono.just(beerDTO));
+        Mono<BeerDTO> savedMono = beerService.createBeer(Mono.just(beerDTO));
         final String updatedBeerName = "JustAnotherName";
 
         savedMono.subscribe(savedDTO -> {
@@ -97,7 +97,7 @@ public class BeerServiceImplTest {
         final String patchedBeerName = "JustAnotherRandomNameAfterPatch";
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<BeerDTO> atomicDTO = new AtomicReference<>();
-        Mono<BeerDTO> savedMono = beerService.saveBeer(Mono.just(beerDTO));
+        Mono<BeerDTO> savedMono = beerService.createBeer(Mono.just(beerDTO));
 
         savedMono.subscribe(savedDTO -> {
             atomicBoolean.set(true);

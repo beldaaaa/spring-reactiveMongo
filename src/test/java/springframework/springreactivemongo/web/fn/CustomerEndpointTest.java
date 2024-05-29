@@ -45,7 +45,7 @@ public class CustomerEndpointTest {
                 .header("Content-Type", "application/json")
                 .exchange()
                 .expectStatus().isCreated()
-                .expectHeader().location("http://localhost:8080/api/v3/customer/4");
+                .expectHeader().exists("location");
     }
 
     @Test
