@@ -41,8 +41,12 @@ public class CustomerHandler {
                         .build());
     }
 
-    Mono<ServerResponse> customerList(ServerRequest serverRequest) {
+    Mono<ServerResponse> deleteCustomer(ServerRequest serverRequest) {
+        return customerService.deleteCustomer(serverRequest.pathVariable("customerId"))
+                .then(ServerResponse.noContent().build());
+    }
 
+    Mono<ServerResponse> customerList(ServerRequest serverRequest) {
         return ServerResponse
                 .ok()
                 .body(customerService.customerList(), CustomerDTO.class);

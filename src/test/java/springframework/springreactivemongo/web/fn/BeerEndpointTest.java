@@ -108,7 +108,7 @@ public class BeerEndpointTest {
                 .uri(BeerRouterConfig.BEER_PATH_ID, TEST_ID)
                 .body(Mono.just(BeerServiceImplTest.helperBeer()), BeerDTO.class)
                 .exchange()
-                .expectStatus().isNoContent();
+                .expectStatus().isNotFound();
     }
 
     @Test
@@ -119,7 +119,7 @@ public class BeerEndpointTest {
                 .uri(BeerRouterConfig.BEER_PATH_ID, beerDTO.getId())
                 .body(Mono.just(beerDTO), BeerDTO.class)
                 .exchange()
-                .expectStatus().isNotFound();
+                .expectStatus().isNoContent();
     }
 
     @Test

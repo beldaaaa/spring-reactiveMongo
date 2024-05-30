@@ -26,6 +26,7 @@ public class CustomerRouterConfig {
                 .POST(CUSTOMER_PATH, accept(MediaType.APPLICATION_JSON), customerHandler::createCustomer)
                 .PUT(CUSTOMER_PATH_ID, accept(MediaType.APPLICATION_JSON), customerHandler::updateCustomer)
                 .PATCH(CUSTOMER_PATH_ID, accept(MediaType.APPLICATION_JSON), customerHandler::patchCustomer)
+                .DELETE(CUSTOMER_PATH_ID, accept(MediaType.APPLICATION_JSON), customerHandler::deleteCustomer)
                 .build();
     }
 }

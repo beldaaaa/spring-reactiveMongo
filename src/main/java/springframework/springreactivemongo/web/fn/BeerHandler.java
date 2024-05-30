@@ -32,6 +32,7 @@ public class BeerHandler {
                         .noContent()
                         .build());
     }
+
     Mono<ServerResponse> patchBeer(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(BeerDTO.class)
                 .map(beerDTO -> beerService
@@ -39,6 +40,11 @@ public class BeerHandler {
                 .flatMap(savedDTO -> ServerResponse
                         .noContent()
                         .build());
+    }
+
+    Mono<ServerResponse> deleteBeer(ServerRequest serverRequest) {
+        return beerService.deleteBeer(serverRequest.pathVariable("beerId"))
+                .then(ServerResponse.noContent().build());
     }
 
     Mono<ServerResponse> beerList(ServerRequest serverRequest) {
