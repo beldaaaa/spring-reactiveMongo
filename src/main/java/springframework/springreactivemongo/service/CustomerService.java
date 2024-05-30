@@ -6,9 +6,9 @@ import springframework.springreactivemongo.model.CustomerDTO;
 
 public interface CustomerService {
 
-    Mono<CustomerDTO> saveCustomer(Mono<CustomerDTO> customerDTO);
+    Mono<CustomerDTO> createCustomer(Mono<CustomerDTO> customerDTO);
 
-    Mono<CustomerDTO> saveCustomer(CustomerDTO customerDTO);
+    Mono<CustomerDTO> createCustomer(CustomerDTO customerDTO);
 
     Mono<CustomerDTO> updateCustomer(String customerId, CustomerDTO customerDTO);
 
@@ -16,7 +16,7 @@ public interface CustomerService {
 
     Mono<Void> deleteCustomer(String customerId);
 
-    Mono<CustomerDTO> findCustomerById(String customerId);
+    Mono<CustomerDTO> findByCustomerId(String customerId);
 
     Flux<CustomerDTO> customerList();
 

@@ -21,6 +21,8 @@ public class CustomerRouterConfig {
     public RouterFunction<ServerResponse> customerRoutes() {
         return route()
                 .GET(CUSTOMER_PATH, accept(MediaType.APPLICATION_JSON), customerHandler::customerList)
+                .GET(CUSTOMER_PATH_ID,accept(MediaType.APPLICATION_JSON),customerHandler::findById)
+                .POST(CUSTOMER_PATH, accept(MediaType.APPLICATION_JSON), customerHandler::createCustomer)
                 .build();
     }
 }

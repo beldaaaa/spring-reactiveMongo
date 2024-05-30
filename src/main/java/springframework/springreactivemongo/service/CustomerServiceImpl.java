@@ -17,14 +17,14 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerMapper customerMapper;
 
     @Override
-    public Mono<CustomerDTO> saveCustomer(Mono<CustomerDTO> customerDTO) {
+    public Mono<CustomerDTO> createCustomer(Mono<CustomerDTO> customerDTO) {
         return customerDTO.map(customerMapper::customerDtoToCustomer)
                 .flatMap(customerRepository::save)
                 .map(customerMapper::customerToCustomerDto);
     }
 
     @Override
-    public Mono<CustomerDTO> saveCustomer(CustomerDTO customerDTO) {
+    public Mono<CustomerDTO> createCustomer(CustomerDTO customerDTO) {
         return customerRepository.save(customerMapper.customerDtoToCustomer(customerDTO))
                 .map(customerMapper::customerToCustomerDto);
     }
@@ -58,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<CustomerDTO> findCustomerById(String customerId) {
+    public Mono<CustomerDTO> findByCustomerId(String customerId) {
         return customerRepository.findById(customerId)
                 .map(customerMapper::customerToCustomerDto);
     }

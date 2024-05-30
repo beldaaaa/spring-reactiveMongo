@@ -42,10 +42,10 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    void saveCustomer() {
+    void createCustomer() {
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<CustomerDTO> atomicDTO = new AtomicReference<>();
-        Mono<CustomerDTO> savedMono = customerService.saveCustomer(Mono.just(customerDTO));
+        Mono<CustomerDTO> savedMono = customerService.createCustomer(Mono.just(customerDTO));
 
         savedMono.subscribe(savedDTO -> {
             atomicBoolean.set(true);
@@ -62,7 +62,7 @@ public class CustomerServiceImplTest {
     void updateCustomer() {
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<CustomerDTO> atomicDTO = new AtomicReference<>();
-        Mono<CustomerDTO> savedMono = customerService.saveCustomer(Mono.just(customerDTO));
+        Mono<CustomerDTO> savedMono = customerService.createCustomer(Mono.just(customerDTO));
         final String updatedCustomerName = "JustAnotherName";
 
         savedMono.subscribe(savedDTO -> {
@@ -91,7 +91,7 @@ public class CustomerServiceImplTest {
         final String patchedCustomerName = "JustAnotherRandomNameAfterPatch";
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         AtomicReference<CustomerDTO> atomicDTO = new AtomicReference<>();
-        Mono<CustomerDTO> savedMono = customerService.saveCustomer(Mono.just(customerDTO));
+        Mono<CustomerDTO> savedMono = customerService.createCustomer(Mono.just(customerDTO));
 
         savedMono.subscribe(savedDTO -> {
             atomicBoolean.set(true);
@@ -118,7 +118,7 @@ public class CustomerServiceImplTest {
         CustomerDTO customerToDelete = helperCustomerDTO();
         customerToDelete.setId("465126865421");
         customerService.deleteCustomer(customerToDelete.getId()).subscribe();
-        Mono<CustomerDTO> expectedEmptyCustomerMono = customerService.findCustomerById(customerToDelete.getId());
+        Mono<CustomerDTO> expectedEmptyCustomerMono = customerService.findByCustomerId(customerToDelete.getId());
 
         StepVerifier.create(expectedEmptyCustomerMono)
                 .expectNextCount(0)
