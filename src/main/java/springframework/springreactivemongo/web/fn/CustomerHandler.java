@@ -14,12 +14,30 @@ import springframework.springreactivemongo.service.CustomerService;
 public class CustomerHandler {
     private final CustomerService customerService;
 
-    Mono<ServerResponse> createCustomer(ServerRequest request) {
-        return customerService.createCustomer(request.bodyToMono(CustomerDTO.class))
+    Mono<ServerResponse> createCustomer(ServerRequest serverRequest) {
+        return customerService.createCustomer(serverRequest.bodyToMono(CustomerDTO.class))
                 .flatMap(customerDTO -> ServerResponse
                         .created(UriComponentsBuilder
                                 .fromPath(CustomerRouterConfig.CUSTOMER_PATH_ID)
                                 .build(customerDTO.getId()))
+                        .build());
+    }
+
+    Mono<ServerResponse> updateCustomer(ServerRequest serverRequest) {
+        return serverRequest.bodyToMono(CustomerDTO.class)
+                .map(customerDTO -> customerService
+                        .updateCustomer(serverRequest.pathVariable("customerId"), customerDTO))
+                .flatMap(savedDTO -> ServerResponse
+                        .noContent()
+                        .build());
+    }
+
+    Mono<ServerResponse> patchCustomer(ServerRequest serverRequest) {
+        return serverRequest.bodyToMono(CustomerDTO.class)
+                .map(customerDTO -> customerService
+                        .patchCustomer(serverRequest.pathVariable("customerId"), customerDTO))
+                .flatMap(savedDTO -> ServerResponse
+                        .noContent()
                         .build());
     }
 

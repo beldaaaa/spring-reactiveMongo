@@ -13,6 +13,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 @RequiredArgsConstructor
 public class CustomerRouterConfig {
+
     public static final String CUSTOMER_PATH = "/api/v3/customer";
     public static final String CUSTOMER_PATH_ID = "/{customerId}";
     private final CustomerHandler customerHandler;
@@ -21,8 +22,10 @@ public class CustomerRouterConfig {
     public RouterFunction<ServerResponse> customerRoutes() {
         return route()
                 .GET(CUSTOMER_PATH, accept(MediaType.APPLICATION_JSON), customerHandler::customerList)
-                .GET(CUSTOMER_PATH_ID,accept(MediaType.APPLICATION_JSON),customerHandler::findById)
+                .GET(CUSTOMER_PATH_ID, accept(MediaType.APPLICATION_JSON), customerHandler::findById)
                 .POST(CUSTOMER_PATH, accept(MediaType.APPLICATION_JSON), customerHandler::createCustomer)
+                .PUT(CUSTOMER_PATH_ID, accept(MediaType.APPLICATION_JSON), customerHandler::updateCustomer)
+                .PATCH(CUSTOMER_PATH_ID, accept(MediaType.APPLICATION_JSON), customerHandler::patchCustomer)
                 .build();
     }
 }

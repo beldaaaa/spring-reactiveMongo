@@ -15,12 +15,29 @@ import springframework.springreactivemongo.service.BeerService;
 public class BeerHandler {
     private final BeerService beerService;
 
-    Mono<ServerResponse> createBeer(ServerRequest request) {
-        return beerService.createBeer(request.bodyToMono(BeerDTO.class))
+    Mono<ServerResponse> createBeer(ServerRequest serverRequest) {
+        return beerService.createBeer(serverRequest.bodyToMono(BeerDTO.class))
                 .flatMap(beerDTO -> ServerResponse//returning a new publisher
                         .created(UriComponentsBuilder
                                 .fromPath(BeerRouterConfig.BEER_PATH_ID)
                                 .build(beerDTO.getId()))
+                        .build());
+    }
+
+    Mono<ServerResponse> updateBeer(ServerRequest serverRequest) {
+        return serverRequest.bodyToMono(BeerDTO.class)
+                .map(beerDTO -> beerService
+                        .updateBeer(serverRequest.pathVariable("beerId"), beerDTO))
+                .flatMap(savedDTO -> ServerResponse
+                        .noContent()
+                        .build());
+    }
+    Mono<ServerResponse> patchBeer(ServerRequest serverRequest) {
+        return serverRequest.bodyToMono(BeerDTO.class)
+                .map(beerDTO -> beerService
+                        .patchBeer(serverRequest.pathVariable("beerId"), beerDTO))
+                .flatMap(savedDTO -> ServerResponse
+                        .noContent()
                         .build());
     }
 

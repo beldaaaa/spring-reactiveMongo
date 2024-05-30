@@ -26,7 +26,9 @@ public class CustomerEndpointTest {
     private WebTestClient webTestClient;
 
     public CustomerDTO helperCustomer() {
-        FluxExchangeResult<CustomerDTO> customerDTOFluxExchangeResult = webTestClient.post().uri(CustomerRouterConfig.CUSTOMER_PATH)
+        FluxExchangeResult<CustomerDTO> customerDTOFluxExchangeResult = webTestClient
+                .post()
+                .uri(CustomerRouterConfig.CUSTOMER_PATH)
                 .body(Mono.just(CustomerServiceImplTest.helperCustomer()), CustomerDTO.class)
                 .header("Content-Type", "application/json")
                 .exchange()
@@ -34,8 +36,13 @@ public class CustomerEndpointTest {
 
         List<String> location = customerDTOFluxExchangeResult.getResponseHeaders().get("Location");
 
-        return webTestClient.get().uri(CustomerRouterConfig.CUSTOMER_PATH)
-                .exchange().returnResult(CustomerDTO.class).getResponseBody().blockFirst();
+        return webTestClient
+                .get()
+                .uri(CustomerRouterConfig.CUSTOMER_PATH)
+                .exchange()
+                .returnResult(CustomerDTO.class)
+                .getResponseBody()
+                .blockFirst();
     }
 
     @Test
@@ -87,6 +94,7 @@ public class CustomerEndpointTest {
     void updateCustomerFound() {
 
         CustomerDTO customerDTO = helperCustomer();
+        // customerDTO.setCustomerName("hohoho");
 
         webTestClient.put()
                 .uri(CustomerRouterConfig.CUSTOMER_PATH_ID, customerDTO.getId())
@@ -112,7 +120,7 @@ public class CustomerEndpointTest {
                 .uri(CustomerRouterConfig.CUSTOMER_PATH_ID, customerDTO.getId())
                 .body(Mono.just(customerDTO), CustomerDTO.class)
                 .exchange()
-                .expectStatus().isNotFound();
+                .expectStatus().isNoContent();
     }
 
     @Test

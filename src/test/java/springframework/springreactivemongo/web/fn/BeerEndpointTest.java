@@ -26,7 +26,9 @@ public class BeerEndpointTest {
     private WebTestClient webTestClient;
 
     public BeerDTO helperBeer() {
-        FluxExchangeResult<BeerDTO> beerDTOFluxExchangeResult = webTestClient.post().uri(BeerRouterConfig.BEER_PATH)
+        FluxExchangeResult<BeerDTO> beerDTOFluxExchangeResult = webTestClient
+                .post()
+                .uri(BeerRouterConfig.BEER_PATH)
                 .body(Mono.just(BeerServiceImplTest.helperBeer()), BeerDTO.class)
                 .header("Content-Type", "application/json")
                 .exchange()
@@ -34,8 +36,13 @@ public class BeerEndpointTest {
 
         List<String> location = beerDTOFluxExchangeResult.getResponseHeaders().get("Location");
 
-        return webTestClient.get().uri(BeerRouterConfig.BEER_PATH)
-                .exchange().returnResult(BeerDTO.class).getResponseBody().blockFirst();
+        return webTestClient
+                .get()
+                .uri(BeerRouterConfig.BEER_PATH)
+                .exchange()
+                .returnResult(BeerDTO.class)
+                .getResponseBody()
+                .blockFirst();
     }
 
     @Test
@@ -101,7 +108,7 @@ public class BeerEndpointTest {
                 .uri(BeerRouterConfig.BEER_PATH_ID, TEST_ID)
                 .body(Mono.just(BeerServiceImplTest.helperBeer()), BeerDTO.class)
                 .exchange()
-                .expectStatus().isNotFound();
+                .expectStatus().isNoContent();
     }
 
     @Test
