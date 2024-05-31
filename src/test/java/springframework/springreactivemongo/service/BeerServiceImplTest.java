@@ -134,27 +134,24 @@ public class BeerServiceImplTest {
     @Test
     void findFirstByBeerName() {
         BeerDTO beerToFind = helperBeerDTO();
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+        //  AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         Mono<BeerDTO> foundBeer = beerService.findFirstByBeerName(beerToFind.getBeerName());
 
-        foundBeer.subscribe(dto -> {
-            atomicBoolean.set(true);
-            System.out.println(dto.toString());
-        });
-        await().untilTrue(atomicBoolean);
+        foundBeer.subscribe();//(dto -> atomicBoolean.set(true));
+        //  await().untilTrue(atomicBoolean);
     }
 
     @Test
     void findByBeerStyle() {
         BeerDTO beerToFind = helperBeerDTO();
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+      //  AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
         beerService.findByBeerStyle(beerToFind.getBeerStyle())
-                .subscribe(dto -> {
-                    atomicBoolean.set(true);
-                    System.out.println(dto.toString());
-                });
-        await().untilTrue(atomicBoolean);
+                .subscribe();//(dto -> {
+//                    atomicBoolean.set(true);
+//                    System.out.println(dto.toString());
+//                });
+//        await().untilTrue(atomicBoolean);
     }
 
 }

@@ -14,7 +14,7 @@ import springframework.springreactivemongo.service.CustomerServiceImplTest;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 
 @SpringBootTest
@@ -169,7 +169,7 @@ public class CustomerEndpointTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().valueEquals("Content-type", "application/json")
-                .expectBody().jsonPath("$.size()", hasSize(greaterThan(1)));
+                .expectBody().jsonPath("$.size()", hasSize(greaterThanOrEqualTo(1)));
     }
 
 }

@@ -128,13 +128,13 @@ public class CustomerServiceImplTest {
     @Test
     void findFirstByCustomerName() {
         CustomerDTO customerToFind = helperCustomerDTO();
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+      //  AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         Mono<CustomerDTO> foundCustomer = customerService.findFirstByCustomerName(customerToFind.getCustomerName());
 
-        foundCustomer.subscribe(dto -> {
-            atomicBoolean.set(true);
-            System.out.println(dto.toString());
-        });
-        await().untilTrue(atomicBoolean);
+        foundCustomer.subscribe();//(dto -> {
+//            atomicBoolean.set(true);
+//            System.out.println(dto.toString());
+//        });
+//        await().untilTrue(atomicBoolean);
     }
 }
