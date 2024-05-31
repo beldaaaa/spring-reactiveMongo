@@ -39,7 +39,8 @@ public class BeerServiceImpl implements BeerService {
                     foundBeer.setUpc(beerDTO.getUpc());
                     foundBeer.setQuantityOnHand(beerDTO.getQuantityOnHand());
                     return foundBeer;
-                }).flatMap(beerRepository::save)
+                })
+                .flatMap(beerRepository::save)
                 .map(beerMapper::beerToBeerDto);
     }
 
@@ -63,7 +64,8 @@ public class BeerServiceImpl implements BeerService {
                         foundBeer.setQuantityOnHand(beerDTO.getQuantityOnHand());
                     }
                     return foundBeer;
-                }).flatMap(beerRepository::save)
+                })
+                .flatMap(beerRepository::save)
                 .map(beerMapper::beerToBeerDto);
     }
 

@@ -84,7 +84,6 @@ public class CustomerEndpointTest {
     void updateCustomerNotFound() {
         webTestClient.put()
                 .uri(CustomerRouterConfig.CUSTOMER_PATH_ID, TEST_ID)
-                .body(Mono.just(CustomerServiceImplTest.helperCustomer()), CustomerDTO.class)
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -94,7 +93,6 @@ public class CustomerEndpointTest {
     void updateCustomerFound() {
 
         CustomerDTO customerDTO = helperCustomer();
-        // customerDTO.setCustomerName("hohoho");
 
         webTestClient.put()
                 .uri(CustomerRouterConfig.CUSTOMER_PATH_ID, customerDTO.getId())
@@ -107,7 +105,6 @@ public class CustomerEndpointTest {
     void patchCustomerNotFound() {
         webTestClient.patch()
                 .uri(CustomerRouterConfig.CUSTOMER_PATH_ID, TEST_ID)
-                .body(Mono.just(CustomerServiceImplTest.helperCustomer()), CustomerDTO.class)
                 .exchange()
                 .expectStatus().isNotFound();
     }

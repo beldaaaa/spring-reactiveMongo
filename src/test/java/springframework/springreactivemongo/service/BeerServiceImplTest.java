@@ -144,7 +144,7 @@ public class BeerServiceImplTest {
     @Test
     void findByBeerStyle() {
         BeerDTO beerToFind = helperBeerDTO();
-      //  AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+        //  AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
         beerService.findByBeerStyle(beerToFind.getBeerStyle())
                 .subscribe();//(dto -> {

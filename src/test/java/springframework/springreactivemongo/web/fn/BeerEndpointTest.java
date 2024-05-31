@@ -84,7 +84,6 @@ public class BeerEndpointTest {
     void updateBeerNotFound() {
         webTestClient.put()
                 .uri(BeerRouterConfig.BEER_PATH_ID, TEST_ID)
-                .body(Mono.just(BeerServiceImplTest.helperBeer()), BeerDTO.class)
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -106,7 +105,6 @@ public class BeerEndpointTest {
     void patchBeerNotFound() {
         webTestClient.patch()
                 .uri(BeerRouterConfig.BEER_PATH_ID, TEST_ID)
-                .body(Mono.just(BeerServiceImplTest.helperBeer()), BeerDTO.class)
                 .exchange()
                 .expectStatus().isNotFound();
     }

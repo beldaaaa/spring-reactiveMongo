@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Customer {
     @Id
     private String id;
-    @Size(min = 2, max = 50)
+    @Size(min = 2, max = 255)
     private String customerName;
     @CreatedDate
     private LocalDateTime createdDate;

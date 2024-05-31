@@ -48,7 +48,8 @@ public class CustomerServiceImpl implements CustomerService {
                         foundCustomer.setCustomerName(customerDTO.getCustomerName());
                     }
                     return foundCustomer;
-                }).flatMap(customerRepository::save)
+                })
+                .flatMap(customerRepository::save)
                 .map(customerMapper::customerToCustomerDto);
     }
 
