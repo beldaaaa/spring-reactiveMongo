@@ -16,7 +16,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class CustomerRouterConfig {
 
     public static final String CUSTOMER_PATH = "/api/v3/customer";
-    public static final String CUSTOMER_PATH_ID = "/{customerId}";
+    public static final String CUSTOMER_PATH_ID = CUSTOMER_PATH + "/{customerId}";
     public static final RequestPredicate ACCEPT_JSON = accept(MediaType.APPLICATION_JSON);
     private final CustomerHandler customerHandler;
 
