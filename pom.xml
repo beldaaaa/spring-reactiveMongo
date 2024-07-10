@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>springframework</groupId>
-    <artifactId>spring-reactiveMongo</artifactId>
+    <artifactId>spring-reactive-mongo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-reactiveMongo</name>
     <description>spring-reactiveMongo</description>
@@ -104,6 +104,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                        <docker>
+                            <host>//./pipe/dockerDesktopLinuxEngine</host>
+                        </docker>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
